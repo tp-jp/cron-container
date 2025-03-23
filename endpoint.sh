@@ -11,7 +11,7 @@ chown root:root /etc/cron.d/*
 
 # cronをバックグラウンドで実行
 echo "startup cron..." >> /var/log/cron.log
-crond -f
+crond -l 2 -f
 
 # cronが動いている間はコンテナを保持
-tail -f /var/log/cron.log
+# tail -f /var/log/cron.log
