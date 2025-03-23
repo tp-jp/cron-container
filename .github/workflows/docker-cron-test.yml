@@ -38,6 +38,7 @@ jobs:
           docker exec cron-test which sh
           docker exec cron-test which echo
           docker exec cron-test ls -l /usr/local/bin/testjob.sh
+          docker exec cron-test echo $PATH
 
       - name: Check if cron job executed
         run: |
