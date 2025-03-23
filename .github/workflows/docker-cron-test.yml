@@ -15,7 +15,7 @@ jobs:
 
       - name: Create cronjobs file
         run: |
-          echo '* * * * * root /usr/bin/sh -c "echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
+          echo '* * * * * root /bin/sh -c "/bin/echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
           echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
 
       - name: Build Docker image
@@ -35,6 +35,7 @@ jobs:
           docker exec cron-test ls -lah /etc/cron.d/
           docker exec cron-test cat /etc/cron.d/cronjobs
           docker exec cron-test which sh
+          docker exec cron-test which echo
 
       - name: Check if cron job executed
         run: |
