@@ -1,2 +1,2 @@
-* * * * * echo "Cron job executed" >> /var/log/cron.log 2>&1
+* * * * * root echo "Cron job executed" >> /var/log/cron.log 2>&1
 #* * * * * root /bin/sh -c 'echo "Cron job executed" >> /var/log/cron.log 2>&1'
