@@ -32,6 +32,7 @@ jobs:
         run: |
           docker logs cron-test
           docker exec cron-test ps aux | grep cron
+          docker exec cron-test ls -lah /etc/cron.d/
           docker exec cron-test cat /etc/cron.d/cronjobs
 
       - name: Check if cron job executed
