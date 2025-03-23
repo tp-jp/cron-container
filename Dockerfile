@@ -2,7 +2,7 @@ FROM alpine:latest
 
 # 必要なパッケージをインストール
 RUN apk add --no-cache \
-  cron \
+  dcron \
   docker-cli
 
 # コンテナ内のcronサービスを開始するためのスクリプトをコピー
