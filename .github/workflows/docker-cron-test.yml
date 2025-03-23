@@ -17,7 +17,6 @@ jobs:
         run: |
           echo '* * * * * root echo "Cron job executed" >> /var/log/cron.log 2>&1' > cronjobs
           echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
-          cat $(pwd)/cronjobs
 
       - name: Build Docker image
         run: |
@@ -28,14 +27,11 @@ jobs:
           docker run -d --name cron-test -v "$(pwd)/cronjobs:/etc/cron.d/cronjobs" cron-container
           sleep 70  # 1分間ジョブが動くのを待つ
 
-      - name: Debug container logs
-        run: |
-          docker logs cron-test || echo "No logs available"
-
       - name: Check if cron is running
         run: |
           docker logs cron-test
           docker exec cron-test ps aux | grep cron
+          docker exec cron-test crontab -l
 
       - name: Check if cron job executed
         run: |
