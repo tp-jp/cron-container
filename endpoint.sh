@@ -4,6 +4,7 @@ touch /var/log/cron.log
 chmod 666 /var/log/cron.log
 
 # cronをバックグラウンドで実行
+echo "startup cron..." >> /var/log/cron.log
 cron
 
 # cronの設定を再読み込み
