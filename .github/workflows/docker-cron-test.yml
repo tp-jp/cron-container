@@ -15,8 +15,9 @@ jobs:
 
       - name: Create cronjobs file
         run: |
-          echo '*/1 * * * * root /bin/sh -c "/bin/echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
-          echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
+          cat $(pwd)/tests/cronjobs
+      #     echo '* * * * * root /bin/sh -c "echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
+      #     echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
 
       - name: Build Docker image
         run: |
@@ -24,7 +25,7 @@ jobs:
 
       - name: Run Docker container with cronjobs
         run: |
-          docker run -d --name cron-test -v "$(pwd)/cronjobs:/etc/cron.d/cronjobs" cron-container
+          docker run -d --name cron-test -v "$(pwd)/tests/cronjobs:/etc/cron.d/cronjobs" cron-container
           # Cronが動くまでの待機。状況に応じて調整する。
           sleep 70
 
