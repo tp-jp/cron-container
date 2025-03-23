@@ -37,7 +37,7 @@ jobs:
           docker exec cron-test cat /etc/cron.d/cronjobs
           docker exec cron-test which sh
           docker exec cron-test which echo
-          docker exec cron-test /bin/sh -c 'echo "Cron job executed"'
+          docker exec cron-test ls -l /usr/local/bin/testjob.sh
 
       - name: Check if cron job executed
         run: |
