@@ -27,6 +27,11 @@ jobs:
           docker run -d --name cron-test -v "$(pwd)/cronjobs:/etc/cron.d/cronjobs" cron-container
           sleep 70  # 1分間ジョブが動くのを待つ
 
+      - name: Debug cron log existence
+        run: |
+          docker exec cron-test ls -lah /var/log/
+          docker exec cron-test cat /var/log/cron.log || echo "cron.log does not exist"
+
       - name: Check if cron is running
         run: |
           docker logs cron-test
