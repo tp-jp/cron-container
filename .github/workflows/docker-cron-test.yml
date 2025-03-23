@@ -15,8 +15,8 @@ jobs:
 
       - name: Create cronjobs file
         run: |
-          cat $(pwd)/tests/cronjobs
-      #     echo '* * * * * root /bin/sh -c "echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
+          echo '* * * * * echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
+      #    cat $(pwd)/tests/cronjobs
       #     echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
 
       - name: Build Docker image
