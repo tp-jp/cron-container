@@ -10,8 +10,5 @@ RUN apk update && apk add --no-cache \
 COPY ./endpoint.sh /usr/local/bin/endpoint.sh
 RUN chmod +x /usr/local/bin/endpoint.sh
 
-# COPY ./tests/testjob.sh /usr/local/bin/testjob.sh
-# RUN chmod 755 /usr/local/bin/testjob.sh
-
 # cronをバックグラウンドで実行
 CMD ["sh", "/usr/local/bin/endpoint.sh"]
