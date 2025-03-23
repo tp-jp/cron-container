@@ -10,5 +10,4 @@ chmod 644 /etc/cron.d/*
 chown root:root /etc/cron.d/*
 
 # cronをバックグラウンドで実行
-echo "startup cron..." >> /var/log/cron.log
 crond -f
