@@ -1,0 +1,49 @@
+name: Test Docker Cron Container
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-cron-container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create cronjobs file
+        run: |
+          echo '* * * * * root echo "Cron job executed" >> /var/log/cron.log 2>&1' > cronjobs
+          echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
+
+      - name: Build Docker image
+        run: |
+          docker build -t cron-container .
+
+      - name: Run Docker container with cronjobs
+        run: |
+          docker run -d --name cron-test -v "$(pwd)/cronjobs:/etc/cron.d/cronjobs" cron-container
+          sleep 70  # 1分間ジョブが動くのを待つ
+
+      - name: Check if cron is running
+        run: |
+          docker logs cron-test
+          docker exec cron-test ps aux | grep cron
+
+      - name: Check if cron job executed
+        run: |
+          docker exec cron-test cat /var/log/cron.log
+          docker exec cron-test grep "Cron job executed" /var/log/cron.log || (echo "Cron job did not execute" && exit 1)
+
+      - name: Check script permissions
+        run: |
+          docker exec cron-test ls -l /usr/local/bin/endpoint.sh
+          docker exec cron-test test -x /usr/local/bin/endpoint.sh && echo "endpoint.sh is executable" || (echo "endpoint.sh is not executable" && exit 1)
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker stop cron-test
+          docker rm cron-test
