@@ -13,19 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Create cronjobs file
-      #   run: |
-      #     echo '* * * * * root echo "Cron job executed" >> /var/log/cron.log 2>&1' > cronjobs
-      #     echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
+      - name: Create cronjobs file
+        run: |
+          echo '* * * * * root echo "Cron job executed" >> /var/log/cron.log 2>&1' > cronjobs
+          echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
 
       - name: Build Docker image
         run: |
           docker build -t cron-container .
 
-      # docker run -d --name cron-test -v "$(pwd)/cronjobs:/etc/cron.d/cronjobs" cron-container
       - name: Run Docker container with cronjobs
         run: |
-          docker run -d --name cron-test cron-container
+          docker run -d --name cron-test -v "$(pwd)/cronjobs:/etc/cron.d/cronjobs" cron-container
           sleep 70  # 1分間ジョブが動くのを待つ
 
       - name: Check if cron is running
