@@ -17,6 +17,7 @@ jobs:
         run: |
           echo '* * * * * root echo "Cron job executed" >> /var/log/cron.log 2>&1' > cronjobs
           echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
+          chown root:root cronjobs
 
       - name: Build Docker image
         run: |
