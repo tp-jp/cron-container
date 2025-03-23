@@ -34,7 +34,7 @@ jobs:
           docker logs cron-test
           docker exec cron-test ps aux | grep cron
           docker exec cron-test ls -lah /etc/cron.d/
-          docker exec cron-test cat /etc/cron.d/cronjobs
+          docker exec cron-test cat /var/spool/cron/crontabs/root
           docker exec cron-test which sh
           docker exec cron-test which echo
           docker exec cron-test ls -l /usr/local/bin/testjob.sh
