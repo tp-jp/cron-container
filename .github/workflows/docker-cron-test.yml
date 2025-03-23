@@ -13,9 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # echo '*/1 * * * * root /bin/sh -c "/bin/echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
       - name: Create cronjobs file
         run: |
-          echo '* * * * * root /bin/sh -c "/bin/echo \"Cron job executed\" >> /var/log/cron.log 2>&1"' > cronjobs
+          echo '*/1 * * * * root echo "Cron job executed" >> /var/log/cron.log 2>&1' > cronjobs
           echo '' >> cronjobs  # 最後に改行がないと cron が動かないことがある
 
       - name: Build Docker image
