@@ -15,7 +15,7 @@
 ```bash
 docker pull ghcr.io/tp-jp/cron-container:latest
 ```
-2. コンテナを実行
+2. コンテナを実行  
 プルしたイメージを使ってコンテナを実行します。cron.d フォルダにcronジョブを配置することで、そのジョブが実行されます。
 ```bash
 docker run -d --name cron-test -v "$(pwd)/cron.d:/etc/cron.d" ghcr.io/<username>/cron-container:latest
