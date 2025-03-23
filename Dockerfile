@@ -1,10 +1,9 @@
-FROM ubuntu:20.04
+FROM alpine:latest
 
 # 必要なパッケージをインストール
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
   cron \
-  docker.io \
-  && rm -rf /var/lib/apt/lists/*
+  docker-cli
 
 # コンテナ内のcronサービスを開始するためのスクリプトをコピー
 COPY ./endpoint.sh /usr/local/bin/endpoint.sh
