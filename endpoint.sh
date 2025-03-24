@@ -10,4 +10,4 @@ chmod 644 /etc/cron.d/*
 chown root:root /etc/cron.d/*
 
 # cronをバックグラウンドで実行
-crond -f
+crond -l 0 -f
