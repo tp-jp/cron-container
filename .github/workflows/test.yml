@@ -25,7 +25,7 @@ jobs:
       - name: Run Docker container with cronjobs
         run: |
           docker run -d --name cron-test -v "$(pwd)/cronjobs:/etc/cron.d/cronjobs" cron-container
-          sleep 20 # Cronが動くまでの待機
+          sleep 60 # Cronが動くまでの待機
 
       - name: Check if cron is running
         run: |
