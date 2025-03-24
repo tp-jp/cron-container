@@ -1,6 +1,6 @@
 # cron-container
 このリポジトリは、Alpine Linux ベースの軽量な cron ジョブ実行コンテナイメージを提供します。  
-このコンテナは、指定されたcronジョブを実行し、その結果をログファイルに記録するために使用されます。  
+このコンテナは、指定された cron ジョブを実行し、その結果を標準出力へ出力するために使用されます。  
 イメージは GitHub Container Registry (GHCR) から直接取得できます。
 
 ## 特徴
@@ -23,17 +23,27 @@ docker run -d --name cron-test -v "$(pwd)/cron.d:/etc/cron.d" ghcr.io/<username>
 これにより、/cron.d/ フォルダ内に配置した設定ファイルに従ってcronジョブが実行されます。  
 
 3. Cronジョブの設定  
-cronジョブは、コンテナ内の /etc/cron.d/ フォルダに設定ファイルとして配置できます。
+cronジョブは、コンテナ内の /etc/cron.d/ フォルダに設定ファイルとして配置できます。  
+標準出力へ直接出力するには以下のように記述します。
 ```bash
-* * * * * echo "Cron job executed" >> /var/log/cron.log 2>&1
+* * * * * echo "Cron job executed"
 ```
 
 4. ログの確認  
-ジョブが実行されたか確認するには、コンテナ内のログファイルを確認します。
+コンテナの標準出力に cron ジョブの実行結果が出力されます。  
+以下のコマンドでログを確認できます。
 ```bash
-docker exec cron-test cat /var/log/cron.log
+docker logs cron-test
 ```
-このログに "Cron job executed" が表示されれば、cronジョブが正常に動作しています。
+また、特定のログをフィルタリングする場合:
+```bash
+docker logs cron-test | grep "Cron job executed"
+```
+例:  
+以下のように出力されれば cron ジョブが正常に動作しています。
+```
+Cron job executed
+```
 
 5. クリーンアップ  
 コンテナを停止して削除するには以下のコマンドを実行します。
@@ -43,7 +53,8 @@ docker rm cron-test
 ```
 
 ## Docker Compose の使用例
-docker-compose.yml を使って、複数のコンテナ設定を簡単に管理することができます。以下は docker-compose.yml の例です。
+docker-compose.yml を使って、複数のコンテナ設定を簡単に管理することができます。  
+以下は docker-compose.yml の例です。
 ```yaml
 version: '3.8'
 
@@ -57,7 +68,9 @@ services:
       - TZ=Asia/Tokyo
     restart: always
 ```
-この設定では、コンテナが永続的に再起動するようにし、./cron.d フォルダをコンテナ内の /etc/cron.d/ にマウントしています。また、タイムゾーンを Asia/Tokyo に設定しています。restart: always を設定することで、コンテナがクラッシュした場合やシステムが再起動した場合に自動的に再起動します。
+この設定では、コンテナが永続的に再起動するようにし、./cron.d フォルダをコンテナ内の /etc/cron.d/ にマウントしています。  
+また、タイムゾーンを Asia/Tokyo に設定しています。  
+restart: always を設定することで、コンテナがクラッシュした場合やシステムが再起動した場合に自動的に再起動します。
 
 ## Docker Compose を使用したコンテナの起動
 次に示すコマンドで、コンテナをバックグラウンドで起動します。
