@@ -4,10 +4,10 @@
 イメージは GitHub Container Registry (GHCR) から直接取得できます。
 
 ## 特徴
-- 軽量: Alpine Linuxをベースにしたコンテナ
-- cronサポート: dcron を使用して、設定されたジョブを定期的に実行
-- 簡単に設定可能: 任意のcronジョブ設定ファイルを /etc/cron.d/ に配置
-- ログ記録: 実行したcronジョブの結果を /var/log/cron.log に記録
+- 軽量: Alpine Linux をベースにしたコンテナ
+- cron サポート: dcron を使用して、設定されたジョブを定期的に実行
+- 簡単に設定可能: 任意の cron ジョブ設定ファイルを `/etc/cron.d/` に配置
+- ログ出力: 実行した cron ジョブの結果を **標準出力 (stdout)** に出力
 
 ## 使用方法
 1. GitHub Container Registry (GHCR) からイメージを取得  
