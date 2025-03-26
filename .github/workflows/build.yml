@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Remove 'docker-' prefix from repository name
-        run: echo "CLEANED_IMAGE_NAME=$(echo $IMAGE_NAME | sed 's|.*/docker-||')" >> $GITHUB_ENV
+        run: echo "CLEANED_IMAGE_NAME=$(echo $IMAGE_NAME | sed 's|/docker-||')" >> $GITHUB_ENV
 
       - name: Build and Push Docker image
         uses: docker/build-push-action@v5
