@@ -1,4 +1,4 @@
-# cron-container
+# docker-cron-container
 このリポジトリは、Alpine Linux ベースの軽量な cron ジョブ実行コンテナイメージを提供します。
 このコンテナは、指定された cron ジョブを実行し、その結果を標準出力へ出力するために使用されます。
 イメージは GitHub Container Registry (GHCR) から直接取得できます。
