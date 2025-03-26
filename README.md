@@ -66,8 +66,6 @@ docker stop cron-test
 docker rm cron-test
 ```
 
----
-
 ## Docker Compose の使用例
 `docker-compose.yml` を使って、複数のコンテナ設定を簡単に管理することができます。  
 以下は `docker-compose.yml` の例です。
@@ -88,21 +86,6 @@ services:
 
 この設定では、コンテナが永続的に再起動するようにし、`./cron.d` フォルダをコンテナ内の `/etc/cron.d/` にマウントしています。  
 また、タイムゾーンを `Asia/Tokyo` に設定し、`restart: always` によってシステム再起動時やコンテナ障害時に自動的に再起動します。
-
-### Docker Compose を使用したコンテナの起動  
-次のコマンドで、コンテナをバックグラウンドで起動します。
-
-```bash
-docker-compose up -d
-```
-
-コンテナを停止するには次のコマンドを使用します。
-
-```bash
-docker-compose down
-```
-
----
 
 ## 注意事項
 - cron ジョブの設定は、`/etc/cron.d/` にファイルを配置することで行います。
